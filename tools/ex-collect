@@ -1,0 +1,21 @@
+#!/usr/bin/env python
+
+import os, glob
+
+def eat_dir(dir):
+    collection = ''
+    for node in sorted(glob.glob('%s/[0-9][0-9]-*' % dir)):
+        title = node[node.rindex('/')+4:].replace('_', ' ')
+        print title
+        if os.path.isdir(node):
+            v = eat_dir(node)
+        else:
+            f = file(node, 'r')
+            v = "r'''" + f.read().strip() +"'''"
+            f.close()
+        collection += '(%s,\n%s),\n' % (repr(title), v)
+    return '(' + collection + ')'
+
+f = file('examples.py', 'w')
+f.write('# Generated automatically\n\n'
+        'examples = ' + eat_dir('.'))

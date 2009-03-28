@@ -1,0 +1,5 @@
+#!/usr/local/bin/python
+
+from scato.ui.app import Scato
+
+Scato()()

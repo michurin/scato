@@ -1,0 +1,64 @@
+====================
+Welcome to the Scato
+====================
+
+Copyright (c) 2009 Michurin Alexey
+
+
+Intro
+-----
+
+Scato is the turtle programming language that is designed to plot
+fractals (IFS), L-systems, and other self-similar curves, and not
+just their.
+
+
+Requirements
+------------
+
+Scato require Python version 2.3 - 2.6 (2.6 preferable) and
+Tkinter library, that included in most Python distributions.
+
+
+Install
+-------
+
+This module was packaged and distributed in the standard way,
+i.e. using the Python Distutils. So it can installed how
+described in Python documentation here:
+http://docs.python.org/install/index.html#standard-build-and-install
+
+You need to do some commands like this:
+
+  tar xzf scato-VER.tgz
+  cd scato-VER
+  python setup.py build
+  sudo -s
+  python setup.py install
+
+
+Run without installation
+------------------------
+
+You can run Scato without installation. Just unpack it, change
+current directory to the distribution, and do something like this
+(sh/bash):
+
+  PYTHONPATH=`pwd` python script/scato
+
+or the same
+
+  export PYTHONPATH=`pwd`
+  python script/scato
+
+Enjoy!
+
+
+Contributing and Feedback
+-------------------------
+
+You can contribute to this document by sending ideas or comments to
+author by e-mail a.michurin@gmail.com.
+
+Information about the Scato, its subversion, issues, etc. can be
+found on the Scato website http://scato.googlecode.com.

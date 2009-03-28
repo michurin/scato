@@ -1,0 +1,18 @@
+Scato*background:                        #aaaaff
+Scato*foreground:                        #333333
+Scato*activeBackground:                  #bbbbff
+Scato*activeForeground:                  #000000
+
+Scato*ButtonBox*borderWidth:             0
+Scato*ButtonBox*activeBorderWidth:       0
+!Scato*ButtonBox*margin:                 0
+!Scato*margin:                           0
+!Scato*padding:                          0
+Scato*Scrollbar.width:                   7
+!Scato*Scrollbar.borderWidth:            1
+
+Scato*borderWidth:                       1
+Scato*font:      -adobe-helvetica-medium-r-normal-*-12-*-*-*-*-*-*-*
+Scato*Text.font: -*-fixed-*-*-*-*-12-*-*-*-*-*-*-*
+
+Scato*selectBorderWidth:                 1

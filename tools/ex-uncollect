@@ -1,0 +1,23 @@
+#!/usr/bin/env python
+
+from examples import examples
+
+import os
+
+def save_dir(e, curdir):
+    nn = 0
+    for n, v in e:
+        n = n.replace(' ', '_')
+        uname = '%s/%02d-%s' % (curdir, nn, n)
+        if hasattr(v, 'upper'):
+            f = file(uname, 'w')
+            f.write(v)
+            f.close()
+            print 'cat > %s' % uname
+        else:
+            print 'mkdir %s' % uname
+            os.mkdir(uname)
+            save_dir(v, uname)
+        nn += 1
+
+save_dir(examples, '.')

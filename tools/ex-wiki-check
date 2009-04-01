@@ -1,0 +1,53 @@
+#!/usr/local/bin/python
+
+def read_wiki():
+    f = file('examples.wiki', 'r')
+    p = False
+    r = []
+    n = 0
+    for l in f:
+        n += 1
+        if l[:3] == '}}}':
+            p = False
+        if p:
+            r[-1][1] += l
+        if l[:3] == '{{{':
+            r.append([n, ''])
+            p = True
+    return r
+
+def untree(tr):
+    r = []
+    for tit, v in tr:
+        if hasattr(v, 'upper'):
+            r.append([tit, v + '\n'])
+        else:
+            r.extend(untree(v))
+    return r
+
+def compare(wk, ex):
+    for w in wk:
+        for e in ex:
+            if w[1] == e[1]:
+                break
+        else:
+            print '-----------------'
+            print w[0]
+            print '-----------------'
+            print w[1]
+            n = str(w[0])
+            n.replace(' ', '_')
+            f = file('diff_%s' % n, 'w')
+            f.write(w[1])
+            f.close()
+
+
+wk = read_wiki()
+
+from examples import examples as ex_tree
+
+ex = untree(ex_tree)
+
+compare(wk, ex)
+print '================================'
+compare(ex, wk)

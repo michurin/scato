@@ -109,15 +109,22 @@ class TortoiseDriver:
     def tortoise_status(self):
         xo = self.context.tortoise.xo
         yo = self.context.tortoise.yo
-        vx = self.context.tortoise.vx
-        vy = self.context.tortoise.vy
+        vxx = self.context.tortoise.xx
+        vxy = self.context.tortoise.xy
+        vyx = self.context.tortoise.yx
+        vyy = self.context.tortoise.yy
         s  = self.context.tortoise.size
         w  = self.context.tortoise.linewidth
         r, g, b = self.context.tortoise.rawcolor
-        return(('X:  %.9g\nY:  %.9g\n'
-                'Vx: %.9g\nVy: %.9g (L: %.9g)\n'
+        return(('X:  %.9g\n'
+                'Y:  %.9g\n'
+                'Ox: x=%.9g\n'
+                '    y=%.9g\n'
+                'Oy: x=%.9g\n'
+                '    y=%.9g\n'
+                'Size: %.9g\n'
                 'Line width: %.9g (abs. %.9g)\n'
                 'Color: r=%.9g\n'
                 '       g=%.9g\n'
                 '       b=%.9g') % (
-                xo, yo, vx, vy, s, w/s, w, r, g, b))
+                xo, yo, vxx, vxy, vyx, vyy, s, w/s, w, r, g, b))

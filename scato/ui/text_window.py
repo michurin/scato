@@ -104,6 +104,12 @@ may user begin/end-block. It is one statement:
 ~Rleft~     VAR-OR-VAL
 ~Rwidth~    VAR-OR-VAL
 
+~HAffine transformations~
+
+~Raffinescale~    VAR-OR-VAL VAR-OR-VAL
+~Raffineforate~   VAR-OR-VAL VAR-OR-VAL
+~Raffinematrix~   VAR-OR-VAL VAR-OR-VAL VAR-OR-VAL VAR-OR-VAL
+
 ~HColors~
 
 ~Rcolor~    VAR-OR-VAL VAR-OR-VAL VAR-OR-VAL
@@ -117,6 +123,7 @@ may user begin/end-block. It is one statement:
 ~Rsub~  VAR VAR-OR-VAL
 ~Rmul~  VAR VAR-OR-VAL
 ~Rdiv~  VAR VAR-OR-VAL
+~Rmod~  VAR VAR-OR-VAL
 ~Rincr~ VAR
 ~Rdecr~ VAR
 ~Rneg~  VAR

@@ -734,6 +734,98 @@ end
 set level 0
 call one_and_next_line'''),
 )),
+('Affine transformations',
+(('Affine scaling',
+r'''procedure example
+local
+begin
+  width .2
+  color 1 1 1
+  iterate 4 begin draw 1 0 left 90 end
+  width .05
+  color .5 0 0
+  iterate 12 begin local draw 1 0 left 30 end
+end
+
+bgcolor .5 .5 .5
+scale .2
+jump 1.25 2.5
+
+# just execute example in not distorted
+# coordinate system
+call example
+
+# shift
+jump 2.5 0
+# and perform affine scaling
+affinescale .5 2
+# we scale Ox axis by factor .5, and Oy axis by factor 2
+
+# and draw example again
+call example'''),
+('Affine rotating',
+r'''procedure example
+local
+begin
+  width .2
+  color 1 1 1
+  iterate 4 begin draw 1 0 left 90 end
+  width .05
+  color .5 0 0
+  iterate 12 begin local draw 1 0 left 30 end
+end
+
+bgcolor .5 .5 .5
+scale .2
+jump 1.25 2.5
+
+# just execute example in not distorted
+# coordinate system
+call example
+
+# shift
+jump 2.5 0
+
+# and perform affine rotation
+affinerotate 30 10
+# now we rotate Ox axis by 30 degrees to left
+# and Oy axis by 10 degrees to left
+# (to rotate to right use negative angles)
+
+# and draw example again
+call example'''),
+('Arbitrary affine transformation',
+r'''procedure example
+local
+begin
+  width .2
+  color 1 1 1
+  iterate 4 begin draw 1 0 left 90 end
+  width .05
+  color .5 0 0
+  iterate 12 begin local draw 1 0 left 30 end
+end
+
+bgcolor .5 .5 .5
+scale .2
+jump 1.25 2.5
+
+# just execute example in not distorted
+# coordinate system
+call example
+
+# shift
+jump 2.5 0
+
+# and perform affine transformation
+affinematrix .5 .5 -.3 1.8
+# now coordinates of axes are set to:
+# Ox: ( 0.5, 0.5)
+# Oy: (-0.3, 1.8)
+
+# and draw example again
+call example'''),
+)),
 )),
 ('Advanced demos',
 (('L-systems',
@@ -1386,6 +1478,38 @@ scale .8
 set limit 7
 set level 0
 call one'''),
+('Affine shadow',
+r'''procedure branch
+if level lt limit then local
+begin
+  incr level
+  draw 0 1
+  affinescale .33 .88
+  left 75
+  iterate 4
+  begin
+    call branch
+    right 50
+  end
+end
+
+procedure tree local begin
+  set level 0
+  set limit 6
+  call branch
+end
+
+bgcolor .5 .5 .5
+jump .3 .25
+scale .18
+color 1 1 1
+width .02
+call tree
+affinerotate 0 -110
+affinescale 1 .8
+color .2 .2 .2
+width .04
+call tree'''),
 )),
 ('Heavy fractals',
 (('Fern',
@@ -1845,6 +1969,34 @@ scale .7
 set l 5
 set r 8
 call I'''),
+('Affine scroll',
+r'''procedure E
+if s lt limit
+then draw 1 0
+else begin
+  local begin
+    scale .83
+    mul s .83
+    left 35
+    mixcolor 1 1 1 .04
+    call E
+  end
+  local begin
+    affinescale -.55 .41
+    mul s .55
+    jump 1 0
+    call E
+  end
+end
+
+bgcolor 0 0 0
+color 0 0 1
+width .5
+jump 0.659344863 0.422637238
+right 47
+set limit .005
+set s 1
+call E'''),
 )),
 )),
 )

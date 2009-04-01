@@ -12,7 +12,7 @@ Scato*Scrollbar.width:                   7
 !Scato*Scrollbar.borderWidth:            1
 
 Scato*borderWidth:                       1
-Scato*font:      -adobe-helvetica-medium-r-normal-*-12-*-*-*-*-*-*-*
-Scato*Text.font: -*-fixed-*-*-*-*-12-*-*-*-*-*-*-*
+!Scato*font:      -adobe-helvetica-medium-r-normal-*-12-*-*-*-*-*-*-*
+!Scato*Text.font: -*-fixed-*-*-*-*-12-*-*-*-*-*-*-*
 
 Scato*selectBorderWidth:                 1

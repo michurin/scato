@@ -140,6 +140,64 @@ class StatementWidth(StatementScale):
 
 
 #
+# affinescale, affinerotate, affinematrix
+#
+
+
+class StatementAffineScale:
+
+    def __init__(self, tokens):
+        self.itself = tokens.next()
+        self.valx = tokens.next()
+        self.valy = tokens.next()
+        self.status_line = '%d: %s %s %s # %%.6g %%.6g' % (
+                            self.itself.line,
+                            self.itself.text,
+                            self.valx.text,
+                            self.valy.text)
+
+    def __call__(self, ctx):
+        vx = ctx.vars[self.valx]
+        vy = ctx.vars[self.valy]
+        ctx.tortoise.affinescale(vx, vy)
+        ctx.status_line = self.status_line % (vx, vy)
+
+
+class StatementAffineRotate(StatementAffineScale):
+
+    def __call__(self, ctx):
+        ax = ctx.vars[self.valx]
+        ay = ctx.vars[self.valy]
+        ctx.tortoise.affinerotate(ax, ay)
+        ctx.status_line = self.status_line % (ax, ay)
+
+
+class StatementAffineMatrix:
+
+    def __init__(self, tokens):
+        self.itself = tokens.next()
+        self.xx = tokens.next()
+        self.xy = tokens.next()
+        self.yx = tokens.next()
+        self.yy = tokens.next()
+        self.status_line = '%d: %s %s %s %s %s # %%.6g %%.6g %%.6g %%.6g' % (
+                            self.itself.line,
+                            self.itself.text,
+                            self.xx.text,
+                            self.xy.text,
+                            self.yx.text,
+                            self.yy.text)
+
+    def __call__(self, ctx):
+        vxx = ctx.vars[self.xx]
+        vxy = ctx.vars[self.xy]
+        vyx = ctx.vars[self.yx]
+        vyy = ctx.vars[self.yy]
+        ctx.tortoise.affinematrix(vxx, vxy, vyx, vyy)
+        ctx.status_line = self.status_line % (vxx, vxy, vyx, vyy)
+
+
+#
 # draw, jump
 #
 
@@ -266,7 +324,8 @@ class StatementBinOp:
         self.op = {'add': lambda x, y: x + y,
                    'sub': lambda x, y: x - y,
                    'mul': lambda x, y: x * y,
-                   'div': lambda x, y: x / y}[t]
+                   'div': lambda x, y: x / y,
+                   'mod': lambda x, y: x % y}[t]
         self.a = tokens.next()
         if self.a.is_num:
             raise LanguageException((
@@ -286,7 +345,8 @@ class StatementBinOp:
             v = self.op(ctx.vars[self.a], ctx.vars[self.b])
         except ZeroDivisionError:
             raise LanguageException(
-               'Zero division error at line %d' % self.itself.line)
+               'Zero division error in command %s at line %d' % (
+               self.itself.text, self.itself.line))
         ctx.vars[self.a] = v
         ctx.status_line = self.status_line % v
 
@@ -744,6 +804,9 @@ def CreateStatement(tokens):
              'right':     StatementRight,
              'left':      StatementLeft,
              'width':     StatementWidth,
+             'affinescale':  StatementAffineScale,
+             'affinerotate': StatementAffineRotate,
+             'affinematrix': StatementAffineMatrix,
              'color':     StatementColor,
              'bgcolor':   StatementBgColor,
              'mixcolor':  StatementMixColor,
@@ -752,6 +815,7 @@ def CreateStatement(tokens):
              'sub':       StatementBinOp,
              'mul':       StatementBinOp,
              'div':       StatementBinOp,
+             'mod':       StatementBinOp,
              'incr':      StatementIncr,
              'decr':      StatementDecr,
              'neg':       StatementNeg,

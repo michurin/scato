@@ -119,14 +119,23 @@ may user begin/end-block. It is one statement:
 ~HVariables and calculations~
 
 ~Rset~  VAR VAR-OR-VAL
+~Rsin~  VAR VAR-OR-VAL
+~Rcos~  VAR VAR-OR-VAL
+~Rexp~  VAR VAR-OR-VAL
+~Rlog~  VAR VAR-OR-VAL
+~Rsqrt~ VAR VAR-OR-VAL
+
 ~Radd~  VAR VAR-OR-VAL
 ~Rsub~  VAR VAR-OR-VAL
 ~Rmul~  VAR VAR-OR-VAL
 ~Rdiv~  VAR VAR-OR-VAL
 ~Rmod~  VAR VAR-OR-VAL
+~Rpow~  VAR VAR-OR-VAL
+
 ~Rincr~ VAR
 ~Rdecr~ VAR
 ~Rneg~  VAR
+~Rabs~  VAR
 
 ~HConditions~
 

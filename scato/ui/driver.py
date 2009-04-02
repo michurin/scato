@@ -1,3 +1,5 @@
+import sys
+
 from scato.ui.window import DoubleScrolledText, CloseButton
 
 from scato.language import Context, \
@@ -54,6 +56,9 @@ class TortoiseDriver:
                                      (CloseButton,
                                       DoubleScrolledText(str(w), 40, 10))))
                 self.status_line('Run-time error!')
+                break
+            except:
+                apply(self.window_generator.show_error, sys.exc_info())
                 break
             if self.step_by_step:
                 if self.context.status_line:

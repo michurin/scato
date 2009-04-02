@@ -1,3 +1,5 @@
+import math
+
 from scato.tortoise import Tortoise
 
 
@@ -290,28 +292,45 @@ class StatementMixColor:
 
 
 #
-# set, add, sub, incr, decr, mul, div
+# set, sin, cos, exp, log, sqrt
+# add, sub, mul, div, mod, pow
+# incr, decr, neg, abs
 #
 
 
-class StatementSet:
+class StatementAssignOp:
 
     def __init__(self, tokens):
         self.itself = tokens.next()
+        t = self.itself.text
+        self.op = {'set':  lambda x: x,
+                   'sin':  lambda x: math.sin(x * math.pi / 180.),
+                   'cos':  lambda x: math.cos(x * math.pi / 180.),
+                   'exp':  lambda x: math.exp(x),
+                   'log':  lambda x: math.log(x),
+                   'sqrt': lambda x: math.sqrt(x)}[t]
         self.a = tokens.next()
         if self.a.is_num:
             raise LanguageException((
                'You can not assign value to constant '
-               'at line %d') % self.itself.line)
+               'at line %d in operation %s') % (
+               self.itself.line, t))
         self.b = tokens.next()
-        self.status_line = '%d: set %s %s # %s := %%.6g' % (
+        self.status_line = '%d: %s %s %s # %s := %%.6g' % (
                             self.itself.line,
+                            t,
                             self.a.text,
                             self.b.text,
                             self.a.text)
 
     def __call__(self, ctx):
-        v = ctx.vars[self.b]
+        arg = ctx.vars[self.b]
+        try:
+            v = self.op(arg)
+        except ValueError:
+            raise LanguageException((
+               'Invalid value %.6g in command %s at line %s') % (
+               arg, self.itself.text, self.itself.line))
         ctx.vars[self.a] = v
         ctx.status_line = self.status_line % v
 
@@ -325,13 +344,14 @@ class StatementBinOp:
                    'sub': lambda x, y: x - y,
                    'mul': lambda x, y: x * y,
                    'div': lambda x, y: x / y,
-                   'mod': lambda x, y: x % y}[t]
+                   'mod': lambda x, y: x % y,
+                   'pow': lambda x, y: math.pow(x, y)}[t]
         self.a = tokens.next()
         if self.a.is_num:
             raise LanguageException((
                'You can not apply "%s" to '
                'constant %s at line %d') % (
-               self.itself.text, self.a.text, self.itself.line))
+               t, self.a.text, self.itself.line))
         self.b = tokens.next()
         self.status_line = '%d: %s %s %s # %s := %%.6g' % (
                             self.itself.line,
@@ -341,50 +361,45 @@ class StatementBinOp:
                             self.a.text)
 
     def __call__(self, ctx):
+        arga = ctx.vars[self.a]
+        argb = ctx.vars[self.b]
         try:
-            v = self.op(ctx.vars[self.a], ctx.vars[self.b])
+            v = self.op(arga, argb)
         except ZeroDivisionError:
             raise LanguageException(
                'Zero division error in command %s at line %d' % (
                self.itself.text, self.itself.line))
+        except ValueError:
+            raise LanguageException((
+               'Invalid values %.6g, %.6g in command %s at line %s') % (
+               arga, argb, self.itself.text, self.itself.line))
         ctx.vars[self.a] = v
         ctx.status_line = self.status_line % v
 
 
-class StatementIncr:
+class StatementUnaOp:
 
     def __init__(self, tokens):
         self.itself = tokens.next()
+        t = self.itself.text
+        self.op = {'incr': lambda x: x + 1,
+                   'decr': lambda x: x - 1,
+                   'neg':  lambda x: -x,
+                   'abs':  lambda x: math.fabs(x)}[t]
         self.a = tokens.next()
         if self.a.is_num:
             raise LanguageException((
-             'Operation %s can not be applay to '
-             'numerical value %s at line %d') % (
-             self.itself.text, self.a.text, self.itself.line))
+               'You can not change value to constant '
+               'at line %d in operation %s') % (
+               self.itself.line, t))
         self.status_line = '%d: %s %s # %s := %%.6g' % (
                             self.itself.line,
-                            self.itself.text,
+                            t,
                             self.a.text,
                             self.a.text)
 
     def __call__(self, ctx):
-        v = ctx.vars[self.a] + 1
-        ctx.vars[self.a] = v
-        ctx.status_line = self.status_line % v
-
-
-class StatementDecr(StatementIncr):
-
-    def __call__(self, ctx):
-        v = ctx.vars[self.a] - 1
-        ctx.vars[self.a] = v
-        ctx.status_line = self.status_line % v
-
-
-class StatementNeg(StatementIncr):
-
-    def __call__(self, ctx):
-        v = - ctx.vars[self.a]
+        v = self.op(ctx.vars[self.a])
         ctx.vars[self.a] = v
         ctx.status_line = self.status_line % v
 
@@ -810,15 +825,22 @@ def CreateStatement(tokens):
              'color':     StatementColor,
              'bgcolor':   StatementBgColor,
              'mixcolor':  StatementMixColor,
-             'set':       StatementSet,
+             'set':       StatementAssignOp,
+             'sin':       StatementAssignOp,
+             'cos':       StatementAssignOp,
+             'exp':       StatementAssignOp,
+             'log':       StatementAssignOp,
+             'sqrt':      StatementAssignOp,
+             'incr':      StatementUnaOp,
+             'decr':      StatementUnaOp,
+             'neg':       StatementUnaOp,
+             'abs':       StatementUnaOp,
              'add':       StatementBinOp,
              'sub':       StatementBinOp,
              'mul':       StatementBinOp,
              'div':       StatementBinOp,
              'mod':       StatementBinOp,
-             'incr':      StatementIncr,
-             'decr':      StatementDecr,
-             'neg':       StatementNeg,
+             'pow':       StatementBinOp,
              'if':        StatementIf,
              'procedure': StatementProcedure,
              'call':      StatementCall,

@@ -12,15 +12,13 @@ class WindowGenerator:
 
     def show_error(self, *args):
         a = traceback.format_exception(*args)
-        self('FATAL ERROR',
-            (DieButton,
-             DoubleScrolledText((
+        self('FATAL ERROR', (DieButton, DoubleScrolledText((
 '''Please report this incident to author %s
 Moreover, now you use Scato version %s
 Please visit the project site http://scato.googlecode.com
 May be this problem has been solved.
 Thanks!
---------------------------- REPORT ---------------------------
+------------------- REPORT -------------------
 ''' % (__email__, __version__)) + ''.join(a), 60, 30)))
 
     def __call__(self, title, fillers):

@@ -1997,6 +1997,215 @@ right 47
 set limit .005
 set s 1
 call E'''),
+('Snowflakes',
+(('Classic',
+r'''set k 1 div k 3 # k = 1/3
+
+procedure F if s gt .01 then begin
+  local begin
+    scale k
+    mul s k
+    iterate 6 begin
+      local begin
+        jump 0 1
+        call F
+      end
+      left 60
+    end
+  end
+  local begin
+    scale k
+    mul s k
+    call F
+  end
+end else begin left 120 draw 0 1 end
+
+bgcolor 0 0 0
+color 1 1 1
+set s 1
+jump .5 .5
+scale 1
+call F'''),
+('Opened classic',
+r'''set k 1 div k 3 # k = 1/3
+
+procedure F if s gt .01 then begin
+  local begin
+    scale k
+    mul s k
+    left 30
+    iterate 6 begin
+      local begin
+        jump 0 1
+        call F
+      end
+      left 60
+    end
+  end
+  local begin
+    scale k
+    mul s k
+    left 30
+    call F
+  end
+end else begin left 120 draw 0 1 end
+
+bgcolor 0 0 0
+color 1 1 1
+set s 1
+jump .5 .5
+scale 1
+call F'''),
+('High density',
+r'''set k .355
+
+procedure F if s gt .01 then begin
+  local begin
+    scale k
+    mul s k
+    left 30
+    iterate 6 begin
+      local begin
+        jump 0 1
+        call F
+      end
+      left 60
+    end
+  end
+  local begin
+    scale k
+    mul s k
+    left 30
+    call F
+  end
+end else begin left 120 draw 0 1 end
+
+bgcolor 0 0 0
+color 1 1 1
+set s 1
+jump .5 .5
+scale 0.93
+call F'''),
+('Low density',
+r'''procedure F if s gt .005 then begin
+  local begin
+    scale .28
+    mul s .28
+    iterate 6 begin
+      local begin
+        jump 0 1
+        call F
+      end
+      left 60
+    end
+  end
+  local begin
+    scale .42
+    mul s .42
+    call F
+  end
+end else begin left 120 draw 0 1 end
+
+bgcolor 0 0 0
+color 1 1 1
+set s 1
+jump .5 .5
+scale 1
+call F'''),
+)),
+('Stars',
+(('Triangle',
+r'''procedure R if step gt .01 then save
+begin
+  div step 1.64
+  neg angl
+  call R
+  draw step 0
+  call R
+end
+else left angl
+
+bgcolor 1 1 1
+color 0 0 0
+set angl 120
+set step 1
+width .004
+jump .01 .4
+scale .98
+iterate 3 begin draw step 0 call R end'''),
+('Quadrilateral',
+r'''procedure R if step gt .01 then save
+begin
+  div step 2.05
+  neg angl
+  call R
+  iterate 2 begin draw step 0 call R end
+end
+else left angl
+
+bgcolor 1 1 1
+color 0 0 0
+set angl 90
+set step 1
+width .004
+jump .02 .334
+scale .96
+iterate 4 begin draw step 0 call R end'''),
+('Pentagon',
+r'''procedure R if step gt .05 then save
+begin
+  div step 2.7
+  neg angl
+  call R
+  iterate 3 begin draw step 0 call R end
+end
+else left angl
+
+bgcolor 1 1 1
+color 0 0 0
+set angl -144
+set step 1
+width .004
+jump .01 .56
+scale .98
+iterate 5 begin draw step 0 call R end'''),
+('Heptagon',
+r'''procedure R if step gt .02 then save
+begin
+  div step 3.3
+  neg angl
+  call R
+  iterate 5 begin draw step 0 call R end
+end
+else left angl
+
+bgcolor 1 1 1
+color 0 0 0
+set angl 154.28571428571428
+set step 1
+width .004
+jump .01 .43
+scale .98
+iterate 7 begin draw step 0 call R end'''),
+('Ennagon',
+r'''procedure R if step gt .02 then save
+begin
+  div step 4.2
+  neg angl
+  call R
+  iterate 7 begin draw step 0 call R end
+end
+else left angl
+
+bgcolor 1 1 1
+color 0 0 0
+set angl -160
+set step 1
+width .004
+jump .01 .545
+scale .98
+iterate 9 begin draw step 0 call R end'''),
+)),
 )),
 )),
 )

@@ -2447,6 +2447,52 @@ scale 1.8
 affinerotate 0 -35
 set s 1
 call R'''),
+('Multifractal forest',
+r'''# Multifractal
+
+procedure B
+local begin
+  draw 0 1
+  if b gt 0 then local begin
+    mixcolor 0 1 0 .16
+    decr b
+    affinescale .57 .84
+    local begin
+      right 25
+      call B
+    end
+    local begin
+      left 25
+      call B
+    end
+  end
+end
+
+procedure F
+if f gt 0 then local begin
+  decr f
+  local begin
+    scale .5
+    local begin
+      jump -2 0
+      call F
+    end
+    local begin
+      jump 2 0
+      call F
+    end
+  end
+  call B
+end
+
+bgcolor 0 0 0
+color 1 1 1
+width .08
+jump .5 .025
+scale .2
+set b 9
+set f 6
+call F'''),
 )),
 )),
 )

@@ -1510,6 +1510,111 @@ affinescale 1 .8
 color .2 .2 .2
 width .04
 call tree'''),
+('Sierpinski carpet',
+r'''# Sierpinski carpet (complement)
+
+procedure R
+begin
+  local begin # draw square
+    jump d d
+    draw s 0
+    draw 0 s
+    draw t 0
+    draw 0 t
+  end
+  if s gt .03 then begin
+     set p s
+     set q t
+     div s 3
+     div t 3
+     div d 3
+     local begin jump p p call R end # draw 8 sqares
+     local begin jump p 0 call R end # 3-times smaler
+     local begin jump p q call R end # .
+     local begin jump 0 p call R end # .
+     local begin jump 0 q call R end # .
+     local begin jump q p call R end #
+     local begin jump q 0 call R end #
+     local begin jump q q call R end #
+  end
+end
+
+color 0 0 0
+bgcolor 1 1 1
+width .01
+jump .5 .5
+scale .32
+set s 1 # s is root factor
+set t s
+neg t   # t = -s
+set d t
+div d 2 # d = -s/2
+call R'''),
+('Pentagon step by step',
+r'''procedure R if s gt 0 then
+  begin
+    local begin
+      decr s
+      scale .38
+      call R
+      left 72
+      call R
+      left 72
+      call R
+      left 72
+      call R
+      left 72
+      call R
+    end
+    jump 1 0
+  end
+  else
+    draw 1 0
+
+procedure D begin
+  color .3 .5 0
+  local call R
+  incr s
+  color 1 1 1
+  local call R
+end
+
+bgcolor 0 0 0
+width .15
+scale 0.75
+local begin jump .15 .04 set s 1 call D end
+local begin jump .82 .04 set s 2 call D end
+local begin jump .15 .70 set s 3 call D end
+local begin jump .82 .70 set s 4 call D end'''),
+('Pentagon',
+r'''procedure R if s gt 0 then
+  begin
+    local begin
+      decr s
+      scale .38
+      call R
+      left 72
+      call R
+      left 72
+      call R
+      left 72
+      call R
+      left 72
+      call R
+      left 72
+    end
+    jump 1 0
+  end
+  else
+    draw 1 0
+
+color 0 0 0
+bgcolor 1 1 1
+width .3
+jump .20 .02
+scale 1.6
+set s 6
+call R'''),
 )),
 ('Heavy fractals',
 (('Fern',
@@ -2057,7 +2162,8 @@ jump .5 .5
 scale 1
 call F'''),
 ('High density',
-r'''set k .355
+r'''sqrt k 3 # k := sqrt(3)
+div  k 5 # k := sqrt(3)/5 
 
 procedure F if s gt .01 then begin
   local begin
@@ -2206,6 +2312,141 @@ jump .01 .545
 scale .98
 iterate 9 begin draw step 0 call R end'''),
 )),
+('Spirals',
+(('Heptagon',
+r'''procedure R local begin
+  if s lt .004 then draw 0 0 else begin
+     scale .9
+     mul s .9
+     left 100
+     call R
+     right 40
+     scale .36
+     mul s .36
+     jump 0 1
+     call R
+  end
+end
+
+color 0 0 0
+bgcolor 1 1 1
+width .5
+jump .53 .53
+scale 1.25
+set s 1
+call R'''),
+('Pentagon',
+r'''procedure R local begin
+  if s lt .004 then draw 0 0 else begin
+     scale .9
+     mul s .9
+     left 149
+     call R
+     right 119
+     scale .34
+     mul s .34
+     jump 0 1
+     call R
+  end
+end
+
+color 0 0 0
+bgcolor 1 1 1
+width .5
+jump .5 .5
+scale 1.25
+set s 1
+call R'''),
+('Octagon',
+r'''procedure R local begin
+  if s lt .004 then draw 0 0 else begin
+     scale .6
+     mul s .6
+     call R
+
+     right 25
+     scale .4
+     mul s .4
+     iterate 4 begin
+       local begin
+         jump 0 1
+         call R
+       end
+       left 90
+     end
+     right 45
+     scale .6
+     mul s .6
+     iterate 4 begin
+       local begin
+         jump 0 1
+         call R
+       end
+       left 90
+     end
+  end
+end
+
+color 0 0 0
+bgcolor 1 1 1
+width .5
+jump .5 .5
+scale 1.7
+set s 1
+call R'''),
+('Tetragon',
+r'''procedure R local begin
+  if s lt .001 then draw 0 0 else begin
+     scale .5
+     mul s .5
+     call R
+     right 0
+     scale .45
+     mul s .45
+     iterate 4 begin
+       local begin
+         jump 0 1
+         call R
+       end
+       left 90
+     end
+  end
+end
+
+color 0 0 0
+bgcolor 1 1 1
+width .5
+jump .5 .5
+scale 1.6
+set s 1
+call R'''),
+)),
+('Universe',
+r'''procedure R local begin
+  if s lt .004 then draw 0 0 else begin
+     scale .9
+     mul s .9
+     left 27
+     call R
+     right 40
+     scale .27
+     mul s .27
+     mixcolor 0 0 1 .3
+     jump 0 1
+     call R
+     jump 0 -2
+     call R
+  end
+end
+
+color 1 1 0
+bgcolor 0 0 0
+width .5
+jump .5 .5
+scale 1.8
+affinerotate 0 -35
+set s 1
+call R'''),
 )),
 )),
 )

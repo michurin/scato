@@ -107,7 +107,7 @@ may user begin/end-block. It is one statement:
 ~HAffine transformations~
 
 ~Raffinescale~    VAR-OR-VAL VAR-OR-VAL
-~Raffineforate~   VAR-OR-VAL VAR-OR-VAL
+~Raffinerotate~   VAR-OR-VAL VAR-OR-VAL
 ~Raffinematrix~   VAR-OR-VAL VAR-OR-VAL VAR-OR-VAL VAR-OR-VAL
 
 ~HColors~

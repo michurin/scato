@@ -97,18 +97,18 @@ may user begin/end-block. It is one statement:
 
 ~HDrawing and moving~
 
-~Rdraw~     VAR-OR-VAL VAR-OR-VAL
-~Rjump~     VAR-OR-VAL VAR-OR-VAL
-~Rscale~    VAR-OR-VAL
-~Rright~    VAR-OR-VAL
-~Rleft~     VAR-OR-VAL
-~Rwidth~    VAR-OR-VAL
+~Rdraw~  VAR-OR-VAL VAR-OR-VAL
+~Rjump~  VAR-OR-VAL VAR-OR-VAL
+~Rscale~ VAR-OR-VAL
+~Rright~ VAR-OR-VAL
+~Rleft~  VAR-OR-VAL
+~Rwidth~ VAR-OR-VAL
 
 ~HAffine transformations~
 
-~Raffinescale~    VAR-OR-VAL VAR-OR-VAL
-~Raffinerotate~   VAR-OR-VAL VAR-OR-VAL
-~Raffinematrix~   VAR-OR-VAL VAR-OR-VAL VAR-OR-VAL VAR-OR-VAL
+~Raffinescale~  VAR-OR-VAL VAR-OR-VAL
+~Raffinerotate~ VAR-OR-VAL VAR-OR-VAL
+~Raffinematrix~ VAR-OR-VAL VAR-OR-VAL VAR-OR-VAL VAR-OR-VAL
 
 ~HColors~
 

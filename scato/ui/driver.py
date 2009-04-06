@@ -70,6 +70,7 @@ class TortoiseDriver:
             # we return to mainloop, but we plan
             # to go back to self.go, when all tasks
             # will be done
+            # self.root.update_idletasks() # is it realy good idea to update here?
             self.callback = self.root.after_idle(self.go)
             return
         self.callback = None

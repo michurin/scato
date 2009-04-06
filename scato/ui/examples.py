@@ -1268,6 +1268,35 @@ right 72
 call F
 right 72
 call F'''),
+('Koch star',
+r'''# Koch star scratch
+
+procedure B save if l gt 0 then begin
+  decr l
+  call B
+  left 60
+  call B
+  right 120
+  call B
+  left 60
+  call B
+end
+else draw 1 0
+
+bgcolor 0 0 0
+color 1 0 0
+width .4
+jump .1 .73
+scale .8
+set l 6     # Depth
+set k .3333
+pow k l
+scale k
+call B
+right 120
+call B
+right 120
+call B'''),
 )),
 ('Fractals',
 (('Dragon curve',
@@ -1615,6 +1644,55 @@ jump .20 .02
 scale 1.6
 set s 6
 call R'''),
+('Extended Koch star',
+r'''# Extended Koch star
+
+procedure B local if l gt 0 then begin
+  decr l
+  scale .3333
+  call B
+  jump 2 0
+  left 180
+  call B
+  jump 1 0
+  right 120
+  call B
+  jump 1 0
+  right 120
+  call B
+  jump 1 0
+  left 60
+  call B
+end
+else draw 1 0
+
+bgcolor 0 0 0
+color 1 0 0
+width .2
+jump .05 .45
+scale .9
+set l 6
+call B'''),
+('Binary',
+r'''procedure B local if l gt 0 then begin
+  decr l
+  scale .5
+  call B
+  jump 1 0
+  call B
+  jump 1 1
+  left 90
+  call B
+end
+else draw 1 0
+
+bgcolor 0 0 0
+color 1 0 0
+width .2
+jump .05 .05
+scale .9
+set l 9
+call B'''),
 )),
 ('Heavy fractals',
 (('Fern',
@@ -2163,7 +2241,7 @@ scale 1
 call F'''),
 ('High density',
 r'''sqrt k 3 # k := sqrt(3)
-div  k 5 # k := sqrt(3)/5 
+div  k 5 # k := sqrt(3)/5
 
 procedure F if s gt .01 then begin
   local begin
@@ -2493,6 +2571,137 @@ scale .2
 set b 9
 set f 6
 call F'''),
+('Snowflake',
+r'''# SnowFlake3 from Fractint
+# ; Adrian Mariano
+# ; from The Fractal Geometry of Nature by Mandelbrot
+# angle 12
+# axiom fx
+# x=++f!x!fy--fx--fy|+@iq3fyf!x!++f!y!++f!y!fx@q3+++f!y!fx
+# y=fyf!x!+++@iq3fyf!x!++f!x!++f!y!fx@q3|+fx--fy--fxf!y!++
+# f=
+
+# f=
+procedure f if l eq 0 then draw p 0
+
+# x=++f!x!fy--fx--fy|+@iq3fyf!x!++f!y!++f!y!fx@q3+++f!y!fx
+procedure x if l gt 0 then save begin
+  decr l
+  right a
+  right a
+  call f
+  neg a
+  call x
+  neg a
+  call f
+  call y
+  left a
+  left a
+  call f
+  call x
+  left a
+  left a
+  call f
+  call y
+  left 180
+  right a
+  div p 1.7320508075688772
+  call f
+  call y
+  call f
+  neg a
+  call x
+  neg a
+  right a
+  right a
+  call f
+  neg a
+  call y
+  neg a
+  right a
+  right a
+  call f
+  neg a
+  call y
+  neg a
+  call f
+  call x
+  mul p 1.7320508075688772
+  right a
+  right a
+  right a
+  call f
+  neg a
+  call y
+  neg a
+  call f
+  call x
+end
+
+# y=fyf!x!+++@iq3fyf!x!++f!x!++f!y!fx@q3|+fx--fy--fxf!y!++
+procedure y if l gt 0 then save begin
+  decr l
+  call f
+  call y
+  call f
+  neg a
+  call x
+  neg a
+  right a
+  right a
+  right a
+  div p 1.7320508075688772
+  call f
+  call y
+  call f
+  neg a
+  call x
+  neg a
+  right a
+  right a
+  call f
+  neg a
+  call x
+  neg a
+  right a
+  right a
+  call f
+  neg a
+  call y
+  neg a
+  call f
+  call x
+  mul p 1.7320508075688772
+  left 180
+  right a
+  call f
+  call x
+  left a
+  left a
+  call f
+  call y
+  left a
+  left a
+  call f
+  call x
+  call f
+  neg a
+  call y
+  neg a
+  right a
+  right a
+end
+
+bgcolor 0 0 0
+color 0 1 0
+width .3
+jump .1 .28
+set l 4    # Parameter for playing
+scale .01  # Change scale if you change l
+set a -30
+set p 1
+call f
+call x'''),
 )),
 )),
 )

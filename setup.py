@@ -10,12 +10,11 @@ setup(name       = 'scato',
       maintainer = author,
       maintainer_email = email,
       url        = "http://scato.googlecode.com/",
-      description = ('Programming language and '
-                     'execution environment to plot fractals'),
+      description = ('Tool to plot fractals and other self-similar curves.'),
       long_description = (
-                     'Scato (Scalable Tortoise) is a programming '
-                     'language and execution environment. '
-                     'Scato is designed to plot fractals and '
+                     'Scato (Scalable Tortoise) is a programming\n'
+                     'language and execution environment.\n'
+                     'Scato is designed to plot fractals and\n'
                      'other self-similar colored curves.'),
       download_url = "http://code.google.com/p/scato/downloads/list",
       license    = 'BSD',

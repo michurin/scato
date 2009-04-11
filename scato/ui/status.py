@@ -1,6 +1,5 @@
 import Tkinter
 
-
 from scato import __version__
 
 

@@ -1,8 +1,11 @@
 import Tkinter
 import sys
+
 from scato import __version__, __author__, __email__
 
+
 ############################################
+
 
 about_text = '''Version: %s
 
@@ -14,7 +17,9 @@ Site:
  http://scato.googlecode.com/
 ''' % (__version__, __author__, __email__)
 
+
 ############################################
+
 
 license_text = '''Copyright (c) 2009, Michurin Alexey
 All rights reserved.
@@ -52,7 +57,9 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
 USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.'''
 
+
 ############################################
+
 
 help_cli_text = '''~HScato command line options~
 
@@ -69,10 +76,11 @@ Usage:
 ~R-w~
    Turn ON file-watch mode.
 ~R-a~
-   Turn ON auto-raise mode.
-'''
+   Turn ON auto-raise mode.'''
+
 
 ############################################
+
 
 help_memo_text = '''~HScato gramma breaf memo~
 

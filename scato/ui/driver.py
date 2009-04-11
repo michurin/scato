@@ -1,7 +1,6 @@
 import sys
 
 from scato.ui.window import DoubleScrolledText, CloseButton
-
 from scato.language import Context, \
                            StatementProg, \
                            TokenSequence, \

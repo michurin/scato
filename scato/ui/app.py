@@ -15,11 +15,14 @@ class Scato:
     def __init__(self):
         self.root = Tkinter.Tk(className='Scato')
         self.cli_options = CLIOptions()
-        self.root.title('Scato: Scalable Tortoise')
+        self.root.title('Scato')
         self.status_line = StatusLine(self.root)
         self.draw_area = DrawArea(self.root, self.cli_options.s)
         self.window_generator = WindowGenerator(self)
-        self.tortoise_driver = TortoiseDriver(self.root, self.draw_area, self.status_line, self.window_generator)
+        self.tortoise_driver = TortoiseDriver(self.root,
+                                              self.draw_area,
+                                              self.status_line,
+                                              self.window_generator)
         self.file_watcher = FileWatcher(self)
         self.menubar = Menu(self)
 

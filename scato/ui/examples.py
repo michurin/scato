@@ -2296,282 +2296,7 @@ set s 1
 jump .5 .5
 scale 1
 call F'''),
-)),
-('Stars',
-(('Triangle',
-r'''procedure R if step gt .01 then save
-begin
-  div step 1.64
-  neg angl
-  call R
-  draw step 0
-  call R
-end
-else left angl
-
-bgcolor 1 1 1
-color 0 0 0
-set angl 120
-set step 1
-width .004
-jump .01 .4
-scale .98
-iterate 3 begin draw step 0 call R end'''),
-('Quadrilateral',
-r'''procedure R if step gt .01 then save
-begin
-  div step 2.05
-  neg angl
-  call R
-  iterate 2 begin draw step 0 call R end
-end
-else left angl
-
-bgcolor 1 1 1
-color 0 0 0
-set angl 90
-set step 1
-width .004
-jump .02 .334
-scale .96
-iterate 4 begin draw step 0 call R end'''),
-('Pentagon',
-r'''procedure R if step gt .05 then save
-begin
-  div step 2.7
-  neg angl
-  call R
-  iterate 3 begin draw step 0 call R end
-end
-else left angl
-
-bgcolor 1 1 1
-color 0 0 0
-set angl -144
-set step 1
-width .004
-jump .01 .56
-scale .98
-iterate 5 begin draw step 0 call R end'''),
-('Heptagon',
-r'''procedure R if step gt .02 then save
-begin
-  div step 3.3
-  neg angl
-  call R
-  iterate 5 begin draw step 0 call R end
-end
-else left angl
-
-bgcolor 1 1 1
-color 0 0 0
-set angl 154.28571428571428
-set step 1
-width .004
-jump .01 .43
-scale .98
-iterate 7 begin draw step 0 call R end'''),
-('Ennagon',
-r'''procedure R if step gt .02 then save
-begin
-  div step 4.2
-  neg angl
-  call R
-  iterate 7 begin draw step 0 call R end
-end
-else left angl
-
-bgcolor 1 1 1
-color 0 0 0
-set angl -160
-set step 1
-width .004
-jump .01 .545
-scale .98
-iterate 9 begin draw step 0 call R end'''),
-)),
-('Spirals',
-(('Heptagon',
-r'''procedure R local begin
-  if s lt .004 then draw 0 0 else begin
-     scale .9
-     mul s .9
-     left 100
-     call R
-     right 40
-     scale .36
-     mul s .36
-     jump 0 1
-     call R
-  end
-end
-
-color 0 0 0
-bgcolor 1 1 1
-width .5
-jump .53 .53
-scale 1.25
-set s 1
-call R'''),
-('Pentagon',
-r'''procedure R local begin
-  if s lt .004 then draw 0 0 else begin
-     scale .9
-     mul s .9
-     left 149
-     call R
-     right 119
-     scale .34
-     mul s .34
-     jump 0 1
-     call R
-  end
-end
-
-color 0 0 0
-bgcolor 1 1 1
-width .5
-jump .5 .5
-scale 1.25
-set s 1
-call R'''),
-('Octagon',
-r'''procedure R local begin
-  if s lt .004 then draw 0 0 else begin
-     scale .6
-     mul s .6
-     call R
-
-     right 25
-     scale .4
-     mul s .4
-     iterate 4 begin
-       local begin
-         jump 0 1
-         call R
-       end
-       left 90
-     end
-     right 45
-     scale .6
-     mul s .6
-     iterate 4 begin
-       local begin
-         jump 0 1
-         call R
-       end
-       left 90
-     end
-  end
-end
-
-color 0 0 0
-bgcolor 1 1 1
-width .5
-jump .5 .5
-scale 1.7
-set s 1
-call R'''),
-('Tetragon',
-r'''procedure R local begin
-  if s lt .001 then draw 0 0 else begin
-     scale .5
-     mul s .5
-     call R
-     right 0
-     scale .45
-     mul s .45
-     iterate 4 begin
-       local begin
-         jump 0 1
-         call R
-       end
-       left 90
-     end
-  end
-end
-
-color 0 0 0
-bgcolor 1 1 1
-width .5
-jump .5 .5
-scale 1.6
-set s 1
-call R'''),
-)),
-('Universe',
-r'''procedure R local begin
-  if s lt .004 then draw 0 0 else begin
-     scale .9
-     mul s .9
-     left 27
-     call R
-     right 40
-     scale .27
-     mul s .27
-     mixcolor 0 0 1 .3
-     jump 0 1
-     call R
-     jump 0 -2
-     call R
-  end
-end
-
-color 1 1 0
-bgcolor 0 0 0
-width .5
-jump .5 .5
-scale 1.8
-affinerotate 0 -35
-set s 1
-call R'''),
-('Multifractal forest',
-r'''# Multifractal
-
-procedure B
-local begin
-  draw 0 1
-  if b gt 0 then local begin
-    mixcolor 0 1 0 .16
-    decr b
-    affinescale .57 .84
-    local begin
-      right 25
-      call B
-    end
-    local begin
-      left 25
-      call B
-    end
-  end
-end
-
-procedure F
-if f gt 0 then local begin
-  decr f
-  local begin
-    scale .5
-    local begin
-      jump -2 0
-      call F
-    end
-    local begin
-      jump 2 0
-      call F
-    end
-  end
-  call B
-end
-
-bgcolor 0 0 0
-color 1 1 1
-width .08
-jump .5 .025
-scale .2
-set b 9
-set f 6
-call F'''),
-('Snowflake',
+('Asymmetrical',
 r'''# SnowFlake3 from Fractint
 # ; Adrian Mariano
 # ; from The Fractal Geometry of Nature by Mandelbrot
@@ -2694,7 +2419,7 @@ end
 
 bgcolor 0 0 0
 color 0 1 0
-width .3
+width .15
 jump .1 .28
 set l 4    # Parameter for playing
 scale .01  # Change scale if you change l
@@ -2702,6 +2427,281 @@ set a -30
 set p 1
 call f
 call x'''),
+)),
+('Stars',
+(('Triangle',
+r'''procedure R if step gt .01 then save
+begin
+  div step 1.64
+  neg angl
+  call R
+  draw step 0
+  call R
+end
+else left angl
+
+bgcolor 1 1 1
+color 0 0 0
+set angl 120
+set step 1
+width .004
+jump .01 .4
+scale .98
+iterate 3 begin draw step 0 call R end'''),
+('Quadrilateral',
+r'''procedure R if step gt .01 then save
+begin
+  div step 2.05
+  neg angl
+  call R
+  iterate 2 begin draw step 0 call R end
+end
+else left angl
+
+bgcolor 1 1 1
+color 0 0 0
+set angl 90
+set step 1
+width .004
+jump .02 .334
+scale .96
+iterate 4 begin draw step 0 call R end'''),
+('Pentagon',
+r'''procedure R if step gt .05 then save
+begin
+  div step 2.7
+  neg angl
+  call R
+  iterate 3 begin draw step 0 call R end
+end
+else left angl
+
+bgcolor 1 1 1
+color 0 0 0
+set angl -144
+set step 1
+width .004
+jump .01 .56
+scale .98
+iterate 5 begin draw step 0 call R end'''),
+('Heptagon',
+r'''procedure R if step gt .02 then save
+begin
+  div step 3.3
+  neg angl
+  call R
+  iterate 5 begin draw step 0 call R end
+end
+else left angl
+
+bgcolor 1 1 1
+color 0 0 0
+set angl 154.28571428571428
+set step 1
+width .004
+jump .01 .43
+scale .98
+iterate 7 begin draw step 0 call R end'''),
+('Ennagon',
+r'''procedure R if step gt .02 then save
+begin
+  div step 4.2
+  neg angl
+  call R
+  iterate 7 begin draw step 0 call R end
+end
+else left angl
+
+bgcolor 1 1 1
+color 0 0 0
+set angl -160
+set step 1
+width .004
+jump .01 .545
+scale .98
+iterate 9 begin draw step 0 call R end'''),
+)),
+('Multifractal forest',
+r'''# Multifractal
+
+procedure B
+local begin
+  draw 0 1
+  if b gt 0 then local begin
+    mixcolor 0 1 0 .16
+    decr b
+    affinescale .57 .84
+    local begin
+      right 25
+      call B
+    end
+    local begin
+      left 25
+      call B
+    end
+  end
+end
+
+procedure F
+if f gt 0 then local begin
+  decr f
+  local begin
+    scale .5
+    local begin
+      jump -2 0
+      call F
+    end
+    local begin
+      jump 2 0
+      call F
+    end
+  end
+  call B
+end
+
+bgcolor 0 0 0
+color 1 1 1
+width .08
+jump .5 .025
+scale .2
+set b 9
+set f 6
+call F'''),
+('Universe',
+r'''procedure R local begin
+  if s lt .004 then draw 0 .1 else begin
+     scale .9
+     mul s .9
+     left 27
+     call R
+     right 40
+     scale .27
+     mul s .27
+     mixcolor 0 0 1 .3
+     jump 0 1
+     call R
+     jump 0 -2
+     call R
+  end
+end
+
+color 1 1 0
+bgcolor 0 0 0
+width .3
+jump .5 .5
+scale 1.8
+affinerotate 0 -35
+set s 1
+call R'''),
+('Spirals',
+(('Heptagon',
+r'''procedure R local begin
+  if s lt .004 then draw 0 .1 else begin
+     scale .9
+     mul s .9
+     left 100
+     call R
+     right 40
+     scale .36
+     mul s .36
+     jump 0 1
+     call R
+  end
+end
+
+color 0 0 0
+bgcolor 1 1 1
+width 1
+jump .53 .53
+scale 1.25
+set s 1
+call R'''),
+('Pentagon',
+r'''procedure R local begin
+  if s lt .004 then draw 0 .1 else begin
+     scale .9
+     mul s .9
+     left 149
+     call R
+     right 119
+     scale .34
+     mul s .34
+     jump 0 1
+     call R
+  end
+end
+
+color 0 0 0
+bgcolor 1 1 1
+width 1
+jump .5 .5
+scale 1.25
+set s 1
+call R'''),
+('Octagon',
+r'''procedure R local begin
+  if s lt .004 then draw 0 .1 else begin
+     scale .6
+     mul s .6
+     call R
+
+     right 25
+     scale .4
+     mul s .4
+     iterate 4 begin
+       local begin
+         jump 0 1
+         call R
+       end
+       left 90
+     end
+     right 45
+     scale .6
+     mul s .6
+     iterate 4 begin
+       local begin
+         jump 0 1
+         call R
+       end
+       left 90
+     end
+  end
+end
+
+color 0 0 0
+bgcolor 1 1 1
+width .5
+jump .5 .5
+scale 1.7
+set s 1
+call R'''),
+('Tetragon',
+r'''procedure R local begin
+  if s lt .001 then draw 0 .1 else begin
+     scale .5
+     mul s .5
+     call R
+     right 0
+     scale .45
+     mul s .45
+     iterate 4 begin
+       local begin
+         jump 0 1
+         call R
+       end
+       left 90
+     end
+  end
+end
+
+color 0 0 0
+bgcolor 1 1 1
+width 1
+jump .5 .5
+scale 1.6
+set s 1
+call R'''),
+)),
 )),
 )),
 )

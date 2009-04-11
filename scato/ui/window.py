@@ -1,9 +1,9 @@
 import Tkinter
-
 import traceback
 import sys
 
 from scato import __version__, __email__
+
 
 class WindowGenerator:
 
@@ -157,4 +157,3 @@ class ExamlpeButtons:
             b1.grid(row=0, column=n, sticky=Tkinter.N+Tkinter.E+Tkinter.W+Tkinter.S)
             frame.grid_columnconfigure(n, weight=1)
             n += 1
-

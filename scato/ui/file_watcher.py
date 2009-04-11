@@ -1,5 +1,7 @@
 import os
+
 from scato.ui.window import DoubleScrolledText, CloseButton
+
 
 class FileWatcher:
 

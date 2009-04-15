@@ -5,7 +5,8 @@ from scato import __version__
 
 class StatusLine:
 
-    def __init__(self, root):
+    def __init__(self, root, sched_gen):
+        self.sched_gen = sched_gen
         self.label = Tkinter.Label(root,
                                    width=2,
                                    relief=Tkinter.RAISED,
@@ -29,7 +30,7 @@ class StatusLine:
 
     def start_any(self):
         if not self.timer is None:
-            self.label.after_cancel(self.timer)
+            self.timer.cancel()
         self.state = -1
         self.step_any()
 
@@ -50,7 +51,7 @@ class StatusLine:
             self.label.configure(bg="#%02x%02x%02x" % tuple(bg),
                                  fg="#%02x%02x%02x" % tuple(fg))
         if self.state < 120:
-            self.timer = self.label.after(30, self.step_any)
+            self.timer = self.sched_gen(self.step_any, 30)
         else:
             self.timer = None
 

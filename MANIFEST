@@ -5,6 +5,7 @@ setup.py
 scato/__init__.py
 scato/draw_area.py
 scato/language.py
+scato/scheduler.py
 scato/tortoise.py
 scato/ui/__init__.py
 scato/ui/app.py

@@ -22,14 +22,10 @@ Thanks!
 ''' % (__email__, __version__)) + ''.join(a), 60, 30)))
 
     def __call__(self, title, fillers):
-        u = self.app.tortoise_driver.ungo()
         root = Tkinter.Toplevel()
         root.title('Scato: ' + title)
         for f in fillers:
             f(root)
-        root.update_idletasks()
-        if u:
-            self.app.tortoise_driver.go()
 
 
 ############################################

@@ -8,21 +8,24 @@ from scato.ui.file_watcher import FileWatcher
 from scato.ui.cli import CLIOptions
 from scato.ui.splash import splash
 from scato.ui.window import WindowGenerator
+from scato.scheduler import ScheduleGenerator
 
 
 class Scato:
 
     def __init__(self):
         self.root = Tkinter.Tk(className='Scato')
+        self.scheduler = ScheduleGenerator(self.root)
         self.cli_options = CLIOptions()
         self.root.title('Scato')
-        self.status_line = StatusLine(self.root)
+        self.status_line = StatusLine(self.root, self.scheduler)
         self.draw_area = DrawArea(self.root, self.cli_options.s)
         self.window_generator = WindowGenerator(self)
         self.tortoise_driver = TortoiseDriver(self.root,
                                               self.draw_area,
                                               self.status_line,
-                                              self.window_generator)
+                                              self.window_generator,
+                                              self.scheduler)
         self.file_watcher = FileWatcher(self)
         self.menubar = Menu(self)
 

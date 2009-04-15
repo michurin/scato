@@ -1,5 +1,7 @@
 import Tkinter
 
+from scato.scheduler import Scheduler
+
 
 class DrawArea:
 
@@ -12,6 +14,9 @@ class DrawArea:
     '''
 
     def __init__(self, root, size):
+        self.compensation_mode = False
+        self.compensation_applied = False
+        self.root = root
         self.size = size
         self.lines = []
         self.frame = Tkinter.Frame(
@@ -37,10 +42,14 @@ class DrawArea:
                         activewidth=0,
                         disabledwidth=0)
         self.canva.pack()
+        self.resize_start = 0
+        self.resize_stop = 0
+        self.resize_sched = None
         self.frame.bind('<Configure>', self.ev_resize)
 
     def clean(self):
         self.lines = []
+        self.compensation_applied = False
         self.ll_clean()
         self.bg('#999999')
 
@@ -81,33 +90,72 @@ class DrawArea:
                     x2 = max(x2, x + w)
                     y1 = min(y1, y - w)
                     y2 = max(y2, y + w)
-            return len(self.lines), x1, x2, 1-y2, 1-y1
-        return 0, 0, 0, 0, 0
+            return (len(self.lines), x1, x2, 1-y2, 1-y1,
+                    self.compensation_applied)
+        return 0, 0, 0, 0, 0, False
 
     def ev_resize(self, e):
         x = min(e.width, e.height)
         if x != self.size:
+            self.compensation_applied = False
             self.size = x
             self.canva.configure(width=x, height=x)
-            for ld in self.lines:
-                self.ll_update(ld)
-        self.canva.coords('bg', (0, 0, self.size, self.size))
+            self.canva.coords('bg', (0, 0, self.size, self.size))
+            self.resize_start = 0
+            self.resize_stop = len(self.lines)
+            if not self.resize_sched is None:
+                self.resize_sched.cancel()
+            self.ev_resize_chunk()
+
+    def ev_resize_chunk(self):
+        l = self.resize_start + 500
+        for i in range(self.resize_start, l):
+            if i >= self.resize_stop:
+                break
+            self.ll_update(self.lines[i])
+        else:
+            self.resize_start = l
+            self.resize_sched = Scheduler(self.root, self.ev_resize_chunk)
+            return
+        self.resize_sched = None
 
     def ll_clean(self):
         self.canva.delete('line')
 
     def ll_line(self, p, w, c):
-        return self.canva.create_line(tuple(map(lambda x: self.size * x, p)),
+        if self.compensation_mode:
+            wd = w * self.size
+            l = max(abs(p[0]-p[2]), abs(p[1]-p[3]))
+            if l < .5 and wd < 1.5:
+                wd = 1.55
+                self.compensation_applied = True
+            return self.canva.create_line(
+                               tuple(map(lambda x: self.size * x, p)),
+                               fill=c,
+                               width=wd,
+                               capstyle='round',
+                               tag='line')
+        else:
+            return self.canva.create_line(
+                               tuple(map(lambda x: self.size * x, p)),
                                fill=c,
                                width=w * self.size,
                                capstyle='round',
                                tag='line')
 
     def ll_update(self, ld):
-        self.canva.itemconfigure(ld[3], width=ld[1] * self.size)
+        iid = ld[3]
+        iw  = ld[1] * self.size
         # canva.coords can eat only tuple but not list
         # Tkinter.__version__ = '$Revision: 50704 $'
-        self.canva.coords(ld[3], tuple(map(lambda x: self.size * x, ld[0])))
+        ipp = tuple(map(lambda x: self.size * x, ld[0]))
+        if self.compensation_mode:
+            l = max(abs(ipp[0]-ipp[2]), abs(ipp[1]-ipp[3]))
+            if l < .5 and iw < 1.5:
+                iw = 1.55
+                self.compensation_applied = True
+        self.canva.itemconfigure(iid, width=iw)
+        self.canva.coords(iid, ipp)
 
 
 if __name__ == '__main__':

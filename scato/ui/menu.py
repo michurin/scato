@@ -1,5 +1,6 @@
 import Tkinter
 import tkFileDialog
+import os
 
 
 from scato.ui.examples import examples
@@ -142,6 +143,19 @@ class Menu:
                            command=self.continue_tortoise,
                            accelerator='space')
         self.root.bind('<Key-space>', lambda e: self.continue_tortoise())
+        self.v.add_separator()
+        self.v_autocompensation = Tkinter.IntVar()
+        self.v_autocompensation.set(0)
+        self.v.add_checkbutton(
+                           label='Compensate too small elements',
+                           variable=self.v_autocompensation,
+                           onvalue=1,
+                           offvalue=0,
+                           command=self.autocompensation_toggle,
+                           accelerator='C')
+        self.root.bind('<Key-c>', lambda e: self.autocompensation_toggle_key())
+        if os.name != 'posix':
+            self.autocompensation_toggle_key()
 
 
         self.i.add_command(label='Variables',
@@ -194,14 +208,11 @@ class Menu:
     ### FILE ###
 
     def open(self):
-        self.app.tortoise_driver.ungo()
         fn = tkFileDialog.askopenfilename(
                      multiple=0,
                      title='Scato: open file')
         if fn:
             self.app.file_watcher.read(fn)
-        else:
-            self.app.tortoise_driver.go()
 
     def reload(self):
         self.app.file_watcher.reread()
@@ -233,7 +244,6 @@ class Menu:
             self.app.draw_area.export_postscript(fn)
 
     def quit(self):
-        self.app.tortoise_driver.ungo()
         self.root.quit()
 
     ### PLAY ###
@@ -261,6 +271,14 @@ class Menu:
 
     def continue_tortoise(self):
         self.app.tortoise_driver.go()
+
+    def autocompensation_toggle_key(self):
+        self.v_autocompensation.set(1 - self.v_autocompensation.get())
+        self.autocompensation_toggle()
+
+    def autocompensation_toggle(self):
+        self.app.draw_area.compensation_mode = 1 == self.v_autocompensation.get()
+        self.restart_tortoise()
 
     ### INFO ###
 

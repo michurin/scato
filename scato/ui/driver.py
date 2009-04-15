@@ -9,8 +9,10 @@ from scato.language import Context, \
 
 class TortoiseDriver:
 
-    def __init__(self, root, draw_area, status_line, window_generator):
+    def __init__(self, root, draw_area, status_line,
+                 window_generator, scheduler_generator):
         self.root = root
+        self.scheduler_generator = scheduler_generator
         self.window_generator = window_generator
         self.draw_area = draw_area
         self.context = Context(draw_area)
@@ -42,7 +44,7 @@ class TortoiseDriver:
         self.status_line(message)
 
     def go(self):
-        for i in xrange(1000):
+        for i in xrange(500):
             if self.context.prog is None:
                 self.status_line('Done.')
                 break
@@ -56,6 +58,8 @@ class TortoiseDriver:
                                       DoubleScrolledText(str(w), 40, 10))))
                 self.status_line('Run-time error!')
                 break
+            except KeyboardInterrupt, w:
+                self.root.quit()
             except:
                 apply(self.window_generator.show_error, sys.exc_info())
                 break
@@ -66,28 +70,15 @@ class TortoiseDriver:
                     self.status_line('Nothing left to do.')
                 break
         else:
-            # we return to mainloop, but we plan
-            # to go back to self.go, when all tasks
-            # will be done
-            # self.root.update_idletasks() # is it realy good idea to update here?
-            self.callback = self.root.after_idle(self.go)
+            self.callback = self.scheduler_generator(self.go)
             return
         self.callback = None
 
     def ungo(self):
-        # i do not understand this behavior completely,
-        # but Tk can not open new windows, while
-        # event after_idle is waiting.
-        # so, we must clean this even everywhere we
-        # want to open dialog window.
-        # we can call go() manually, after open window
         if self.callback is None:
-            # you do not need to recall go()
-            return False
-        self.root.after_cancel(self.callback)
+            return
+        self.callback.cancel()
         self.callback = None
-        # you must recall go()
-        return True
 
     def showvars(self):
         if self.context.vars.space:
@@ -95,7 +86,7 @@ class TortoiseDriver:
         return 'There are no variables yet.'
 
     def showbox(self):
-        n, x1, x2, y1, y2 = self.draw_area.get_box_size()
+        n, x1, x2, y1, y2, ca = self.draw_area.get_box_size()
         if n < 1:
             return 'Draw area empty now.'
         dx = x2 - x1
@@ -103,13 +94,22 @@ class TortoiseDriver:
         cx = (x1 + x2)/2.
         cy = (y1 + y2)/2.
         s = 1./max(dx, dy)
+        if ca:
+            ctext = 'Compensation applied!'
+        else:
+            ctext = 'Compensation not been applied'
         return (('Lines: %d\n\n'
-                 'X: %.9g .. %.9g\nY: %.9g .. %.9g\n\n'
-                 'Width: %.9g\nHeight: %.9g\n\n'
-                 'Center: x=%.9g\n        y=%.9g\n\n'
+                 'X: %.9g .. %.9g\n'
+                 'Y: %.9g .. %.9g\n\n'
+                 'Width: %.9g\n'
+                 'Height: %.9g\n\n'
+                 'Center: x=%.9g\n'
+                 '        y=%.9g\n\n'
+                 '%s\n\n'
                  'Center commands:\n'
-                 ' jump %.9g %.9g\n scale %.9g') % (
-                 n, x1, x2, y1, y2, dx, dy, cx, cy, -x1*s, -y1*s, s))
+                 ' jump %.9g %.9g\n'
+                 ' scale %.9g') % (
+                 n, x1, x2, y1, y2, dx, dy, cx, cy, ctext, -x1*s, -y1*s, s))
 
     def tortoise_status(self):
         xo = self.context.tortoise.xo

@@ -7,13 +7,21 @@ class DrawArea:
 
     '''Interface:
        area = DrawArea(tk_root_element)
-       area.line((x1, y1, x2, y2), width, color)
+       # area.compensation_mode = True # for MS Windows
        area.bg(color)
        area.bd(color)
+       area.line((x1, y1, x2, y2), width, color)
+       # if area.compensation_applied:
+       #     print ('Warning: compensation has been applied.\n'
+       #            'PostScript file would be compensate too.\n'
+       #            'Redraw image to save it without any distortions.')
+       area.export_postscript('file.ps')
        area.clear()
     '''
 
     def __init__(self, root, size):
+        # compensation mode is a hack arm to compensate
+        # bug(?) in MS Windows implementation of Tk
         self.compensation_mode = False
         self.compensation_applied = False
         self.root = root
@@ -125,12 +133,13 @@ class DrawArea:
     def ll_line(self, p, w, c):
         if self.compensation_mode:
             wd = w * self.size
-            l = max(abs(p[0]-p[2]), abs(p[1]-p[3]))
+            q = tuple(map(lambda x: self.size * x, p))
+            l = max(abs(q[0]-q[2]), abs(q[1]-q[3]))
             if l < .5 and wd < 1.5:
                 wd = 1.55
                 self.compensation_applied = True
             return self.canva.create_line(
-                               tuple(map(lambda x: self.size * x, p)),
+                               q,
                                fill=c,
                                width=wd,
                                capstyle='round',

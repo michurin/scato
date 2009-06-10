@@ -2593,6 +2593,60 @@ scale 1.8
 affinerotate 0 -35
 set s 1
 call R'''),
+('Feather',
+r'''procedure P begin
+ mixcolor 0 0 1 .01
+ right ang
+ scale .95
+ draw 1 0
+end
+
+procedure A if level gt 0 then local begin
+ decr level
+ iterate 1 begin
+   call P
+ end
+ iterate 10 begin
+   call P
+   local begin
+     scale .25
+     transform begin
+       left ang_l
+       call A
+     end
+     right ang_r
+     neg ang
+     neg ang_l
+     neg ang_r
+     call A
+   end
+ end
+ scale .3
+ set t ang_l
+ div t 2
+ left t
+ call A
+ right t
+ call A
+ mul t 1.6
+ right t
+ neg ang
+ neg ang_l
+ neg ang_r
+ call A
+end
+
+bgcolor 0 0 0
+color 1 1 1
+jump .1 .1
+width .2
+scale .11
+left 60
+set level 4
+set ang 2
+set ang_l 60
+set ang_r 70
+call A'''),
 ('Spirals',
 (('Heptagon',
 r'''procedure R local begin

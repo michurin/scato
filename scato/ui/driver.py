@@ -93,7 +93,7 @@ class TortoiseDriver:
         dy = y2 - y1
         cx = (x1 + x2)/2.
         cy = (y1 + y2)/2.
-        s = 1./max(dx, dy)
+        dd = max(dx, dy)
         if ca:
             ctext = 'Compensation applied!'
         else:
@@ -107,9 +107,10 @@ class TortoiseDriver:
                  '        y=%.9g\n\n'
                  '%s\n\n'
                  'Center commands:\n'
-                 ' jump %.9g %.9g\n'
-                 ' scale %.9g') % (
-                 n, x1, x2, y1, y2, dx, dy, cx, cy, ctext, -x1*s, -y1*s, s))
+                 'jump %.9g %.9g\n'
+                 'scale %.9g') % (
+                 n, x1, x2, y1, y2, dx, dy, cx, cy, ctext,
+                 ((dd-dx)/2.-x1)/dd, ((dd-dy)/2.-y1)/dd, 1./dd))
 
     def tortoise_status(self):
         xo = self.context.tortoise.xo

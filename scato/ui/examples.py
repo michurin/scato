@@ -2647,6 +2647,197 @@ set ang 2
 set ang_l 60
 set ang_r 70
 call A'''),
+('Random',
+(('Simplest',
+r'''procedure next_rand # generate next random number
+begin
+  mul rand 105
+  incr rand
+  mod rand 199
+end
+
+procedure F
+transform
+begin
+  decr level
+  call next_rand
+  set v rand # use random number
+  div v 700
+  add v .02
+  draw 0 v
+  if level gt 0 then
+  begin
+    scale .7
+    left 45
+    call F
+    right 90
+    call F
+  end
+  incr level
+end
+
+set rand 16 # init random sequence
+color 1 1 1
+bgcolor 0 0 0
+width .02
+jump .5 .15
+set level 12
+call F'''),
+('Tree',
+r'''procedure next_rand # generate next random number
+begin
+  mul rand 105
+  incr rand
+  mod rand 199
+end
+
+procedure L
+  if scl gt scl_limit then
+    if l_len gt 0 then
+    begin
+      decr l_len
+      scale scl_factor
+      mul scl scl_factor
+      set clr scl
+      mul clr .5
+      add clr .5
+      color clr 1 clr
+      draw 0 1
+      right ang
+      call L
+      div scl scl_factor
+    end
+    else
+    begin
+      call F
+      neg ang
+      call F
+      neg ang
+    end
+  else
+  begin
+    if rand lt 10 then
+    transform
+    begin
+      call next_rand
+      set clr rand
+      div clr 400
+      add clr .5
+      color clr 0 0
+      width 12
+      draw 0 0
+    end
+    call next_rand
+  end
+
+procedure F
+  if scl gt scl_limit then
+  transform
+  begin
+    set l_len rand
+    mod l_len 5
+    add l_len 3
+    call next_rand
+    call L
+  end
+
+set rand 5 # init random sequince
+color 1 1 1
+bgcolor 0 0 0
+width .2
+jump .5 .15
+scale .04
+
+set ang 7
+set scl 1
+set scl_limit .02
+set scl_factor .94
+call F
+neg ang
+call F'''),
+('All trees are different',
+r'''procedure next_rand # generate next random number
+begin
+  mul rand 105
+  incr rand
+  mod rand 199
+end
+
+procedure L
+  if scl gt scl_limit then
+    if l_len gt 0 then
+    begin
+      decr l_len
+      scale scl_factor
+      mul scl scl_factor
+      set clr scl
+      mul clr .5
+      add clr .5
+      color clr 1 clr
+      draw 0 1
+      right ang
+      call L
+      div scl scl_factor
+    end
+    else
+    begin
+      call F
+      neg ang
+      call F
+      neg ang
+    end
+  else
+  begin
+    if rand lt 10 then
+    transform
+    begin
+      call next_rand
+      set clr rand
+      div clr 400
+      add clr .5
+      color clr 0 0
+      width 12
+      draw 0 0
+    end
+    call next_rand
+  end
+
+procedure F
+  if scl gt scl_limit then
+  transform
+  begin
+    set l_len rand
+    mod l_len 5
+    add l_len 3
+    call next_rand
+    call L
+  end
+
+set rand 5 # init random sequince
+color 1 1 1
+bgcolor 0 0 0
+width .4
+jump .25 .1
+scale .02
+
+set ang 7
+set scl .5
+set scl_limit .02
+set scl_factor .94
+
+iterate 2
+begin
+  iterate 2
+  begin
+    call F
+    neg ang
+    call F
+    neg ang
+    jump 25 0
+  end
+  jump -50 23
+end'''),
+)),
 ('Spirals',
 (('Heptagon',
 r'''procedure R local begin

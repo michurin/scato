@@ -1268,8 +1268,8 @@ right 72
 call F
 right 72
 call F'''),
-('Koch star',
-r'''# Koch star scratch
+('Koch snowflake',
+r'''# Koch snowflake
 
 procedure B save if l gt 0 then begin
   decr l
@@ -1644,8 +1644,8 @@ jump .20 .02
 scale 1.6
 set s 6
 call R'''),
-('Extended Koch star',
-r'''# Extended Koch star
+('Extended Koch snowflake',
+r'''# Extended Koch snowflake
 
 procedure B local if l gt 0 then begin
   decr l

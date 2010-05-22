@@ -826,6 +826,74 @@ affinematrix .5 .5 -.3 1.8
 # and draw example again
 call example'''),
 )),
+('For self-study',
+(('Sunflower',
+r'''# Sunflower
+
+bgcolor 0 0 0
+color 1 1 0
+jump .5 .5
+scale .27
+width .3
+
+procedure a
+transform begin
+  jump 1 0
+  scale .5
+  right 45
+  draw 1 0
+  jump 0 1
+  draw -1 0
+  mixcolor 1 1 1 .7
+  draw 0 -1
+  jump 1 0
+  draw 0 1
+end
+
+iterate 7 begin
+  iterate 12 begin
+    call a
+    right 30
+  end
+  mixcolor 0 1 0 .2
+  scale .58
+end
+'''),
+('Yellow and green',
+r'''# yellow and green
+
+bgcolor 0 0 0
+color .3 .3 1
+jump .5 .5
+scale .66
+width .04
+
+procedure sq
+transform begin
+  iterate 16 begin
+    transform begin
+      jump .5 .5
+      draw -1  0
+      draw  0 -1
+      draw  1  0
+      draw  0  1
+    end
+    scale .72
+    right 30
+    mixcolor 1 1 1 .2
+  end
+end
+
+color .1 .6 .1
+call sq
+right 30
+color .1 .6 .1
+call sq
+right 30
+color 1 1 .4
+call sq'''),
+)),
+
 )),
 ('Advanced demos',
 (('L-systems',
@@ -1297,6 +1365,56 @@ right 120
 call B
 right 120
 call B'''),
+('Koch snowflakes insides',
+r'''# Koch snowflakes insides
+
+procedure A save if s gt limit then
+begin
+  div s 3
+  call A
+  left 60
+  call A
+  right 120
+  call A
+  left 60
+  call A
+end
+else draw s 0
+
+procedure B iterate 3 begin
+  call A
+  right 120
+end
+
+procedure C begin
+set t s
+neg t
+jump 0 t
+iterate 6 begin
+  left 30
+  call B
+  jump s 0
+  left 30
+end
+jump 0 s
+end
+
+bgcolor 0 0 0
+color .5 1 .5
+width .01
+jump .5 .5
+scale .28
+set limit .03
+
+set s 1
+repeat
+begin
+  call C
+  div s 3
+  mixcolor 1 1 1 .4
+end
+until s gt limit'''
+),
 )),
 ('Fractals',
 (('Dragon curve',
@@ -2947,6 +3065,67 @@ scale 1.6
 set s 1
 call R'''),
 )),
+('The birthday of my daughter',
+r'''# the birthday of my daughter
+
+procedure e local begin
+  set a A
+  mul a 5
+  set n 0
+  iterate 60 begin
+    if n lt 30
+    then
+      mixcolor 1 .5 0 .1
+    else
+      mixcolor 1 1 1 .2
+    incr n
+    draw 0 .2
+    left a
+    scale .97
+  end
+end
+
+procedure b begin
+  iterate L begin
+    draw 0 .1
+    left A
+    scale F
+    mul S F
+  end
+end
+
+procedure branch
+begin
+  if S gt LIMIT then begin
+    local begin
+      call b
+      call branch
+    end
+    local begin
+      set t 24
+      sub t L
+      set L t
+      neg A
+      call b
+      call branch
+    end
+  end
+  if S lt SUBLIMIT then local begin
+     call e
+  end
+end
+
+jump .5 .2
+scale .2
+set L 8
+set A 4
+set F .97
+set S 1
+set LIMIT .1
+set SUBLIMIT .3
+bgcolor 0 0 .1
+color .3 .14 0.1
+call branch'''),
 )),
 )),
 )

@@ -36,16 +36,16 @@ for ex, sfx, size, marg, tile, in ((ex_learn, 'l', 60, 1, 10), (ex_demo, 'd', 12
         while not ct.prog is None:
             ct.prog(ct)
         tk.update()
-	f = 'fig_%02d_%s' % (n, sfx)
+        f = 'fig_%02d_%s' % (n, sfx)
         da.export_postscript('%s.ps' % f)
-	os.system('gs -dBATCH -dSAFER -dNOPAUSE -dEPSCrop '
-	          '-r100 -q -sDEVICE=png16m -sOutputFile=%s-b.png '
-		  '%s.ps' % (f, f))
-	os.system('convert -resize %dx%d %s-b.png %s.png' % (size, size, f, f))
-	sh += ' %s.png' % f
+        os.system('gs -dBATCH -dSAFER -dNOPAUSE -dEPSCrop '
+                  '-r100 -q -sDEVICE=png16m -sOutputFile=%s-b.png '
+                  '%s.ps' % (f, f))
+        os.system('convert -resize %dx%d %s-b.png %s.png' % (size, size, f, f))
+        sh += ' %s.png' % f
     os.system('montage %s -geometry +%d+%d -tile %dx -background none fig_res_%s.png' % (
                sh, marg, marg, tile, sfx))
-	
+
 
 # for i in fig_??.ps; do gs -dBATCH -dSAFER -dNOPAUSE -dEPSCrop -r100 -q -sDEVICE=png16m -sOutputFile=xxx.png $i ; convert -resize 80x80 xxx.png ${i%ps}png; done
 # montage fig_??.png -geometry +1+1 -background none xxx.png

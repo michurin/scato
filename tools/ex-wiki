@@ -1,0 +1,80 @@
+#!/usr/local/bin/python
+
+import sys
+import Tkinter
+import os
+
+sys.path.append('..')
+
+from scato.ui.examples import examples
+from scato.language import Context, StatementProg, TokenSequence
+from scato.draw_area import DrawArea
+
+
+def num(x):
+    if x < 10:
+        return str(x)
+    else:
+        return chr(87+x)
+
+class wiki_page_gen:
+
+    def __init__(o):
+        o.wiki_page = file('examples.wiki', 'w')
+        o.tk = Tkinter.Tk()
+        o.da = DrawArea(o.tk, 100)
+        o.ct = Context(o.da)
+
+    def create_image(o, text, name):
+        print name
+#        return
+        pr = StatementProg(TokenSequence(text))
+        o.ct.drop_state(pr)
+        while not o.ct.prog is None:
+            o.ct.prog(o.ct)
+        o.tk.update()
+        o.da.export_postscript('%s.ps' % name)
+        os.system('gs -dBATCH -dSAFER -dNOPAUSE -dEPSCrop '
+                  '-r200 -q -sDEVICE=png16m -sOutputFile=%s-b.png '
+                  '%s.ps' % (name, name))
+        os.system('convert -resize %dx%d %s-b.png %s.png' % (300, 300, name, name))
+
+    def processor(o, examples, levels = None):
+        if levels is None:
+            l = []
+        else:
+            l = levels[:]
+        l.append(0)
+        s = '=' * len(l)
+        for tit, val in examples:
+            l[-1] += 1
+            o.wiki_page.write('%s %s %s\n\n' % (s, tit, s))
+            if hasattr(val, 'upper'):
+                name = 'example-' + '-'.join(map(num, l))
+                o.create_image(val, name)
+                o.wiki_page.write((
+                 'Code:\n\n{{{\n'
+                 '%s\n}}}\n\n'
+                 'Result:\n\n'
+                 'http://scato.googlecode.com/svn/wiki/%s.png\n\n'
+                ) % (val, name))
+            else:
+                o.processor(val, l)
+
+wiki_page_gen().processor(examples)
+
+# #!/bin/sh
+#
+# for xx in 1_60 2_120
+# do
+#     sfxx=${xx%_*}
+#     size=${xx#*_}
+#     echo sfxx=$sfxx, size=$size
+#     for file in example-$sfxx-*
+#     do
+#         echo $file
+#         convert -resize ${size}x$size $file s-$file
+#     done
+# done
+# montage s-example-1-* -geometry +1+1 -tile 10x -background none examples-learning.png
+# montage s-example-2-* -geometry +2+2 -tile 5x -background none examples-demo.png

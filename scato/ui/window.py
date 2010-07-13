@@ -55,7 +55,7 @@ class DoubleScrolledText:
         frame = Tkinter.Frame(root)
         frame.pack(expand=Tkinter.TRUE, fill=Tkinter.BOTH)
         txt = Tkinter.Text(frame,
-                           background="#ffffff",
+                           background='#ffffff',
                            wrap=Tkinter.NONE,
                            width=self.width,
                            height=self.height)
@@ -80,10 +80,10 @@ class DoubleScrolledText:
 class DoubleScrolledFormatedText(DoubleScrolledText):
 
     def init_tags(self):
-        self.txt.tag_configure("O", foreground="#333333")
-        self.txt.tag_configure("C", foreground="#009900")
-        self.txt.tag_configure("H", foreground="#000000", underline=1)
-        self.txt.tag_configure("R", foreground="#000099")
+        self.txt.tag_configure('O', foreground='#333333')
+        self.txt.tag_configure('C', foreground='#009900')
+        self.txt.tag_configure('H', foreground='#000000', underline=1)
+        self.txt.tag_configure('R', foreground='#000099')
 
     def insert_text(self):
         self.txt.configure(state=Tkinter.NORMAL)
@@ -109,7 +109,7 @@ class CloseButton:
 
     def __init__(self, root):
         self.root = root
-        btn = Tkinter.Button(root, text="Close", command=self,
+        btn = Tkinter.Button(root, text='Close', command=self,
                              padx=10, pady=0)
         btn.pack(fill=Tkinter.X, side=Tkinter.BOTTOM)
 
@@ -121,7 +121,7 @@ class DieButton:
 
     def __init__(self, root):
         self.root = root
-        btn = Tkinter.Button(root, text="EXIT", command=self,
+        btn = Tkinter.Button(root, text='EXIT', command=self,
                              padx=10, pady=0,
                              activebackground='#ff0000',
                              activeforeground='#ffffff')

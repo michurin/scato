@@ -1,0 +1,24 @@
+#!/usr/local/bin/python
+
+import sys
+import Tkinter
+
+sys.path.append('..')
+
+from scato.ui.examples import examples
+from scato.language import Context, StatementProg, TokenSequence
+from scato.draw_area import DrawArea
+
+if __name__ == '__main__':
+    tk = Tkinter.Tk()
+    da = DrawArea(tk, 100)
+    ct = Context(da)
+    for name in sys.argv[1:]:
+        print 'file = %s' % name
+        prog = file(name, 'r').read()
+        pr = StatementProg(TokenSequence(prog))
+        ct.drop_state(pr)
+        while not ct.prog is None:
+            ct.prog(ct)
+        tk.update()
+        da.export_postscript('%s.eps' % name)

@@ -8,7 +8,7 @@ class CLIOptions:
             o, t = getopt.getopt(sys.argv[1:], 'g:f:s:wa')
         except getopt.GetoptError, err:
             print str(err)
-            sys.exiti(1)
+            sys.exit(1)
         d = dict(o)
         self.g = d.get('-g', '')
         try:

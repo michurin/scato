@@ -857,8 +857,7 @@ iterate 7 begin
   end
   mixcolor 0 1 0 .2
   scale .58
-end
-'''),
+end'''),
 ('Yellow and green',
 r'''# yellow and green
 
@@ -893,7 +892,6 @@ right 30
 color 1 1 .4
 call sq'''),
 )),
-
 )),
 ('Advanced demos',
 (('L-systems',
@@ -1413,8 +1411,7 @@ begin
   div s 3
   mixcolor 1 1 1 .4
 end
-until s gt limit'''
-),
+until s gt limit'''),
 )),
 ('Fractals',
 (('Dragon curve',

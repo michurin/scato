@@ -44,8 +44,8 @@ class DrawArea:
                         width=self.size,
                         height=self.size)
         self.canva.create_rectangle(
-                        (0, 0, 1, 1),
-                        tags="bg",
+                        (0, 0, self.size, self.size),
+                        tags='bg',
                         width=0,
                         activewidth=0,
                         disabledwidth=0)

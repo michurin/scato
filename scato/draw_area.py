@@ -27,6 +27,9 @@ class DrawArea:
         self.root = root
         self.size = size
         self.lines = []
+        self.resize_start = 0
+        self.resize_stop = 0
+        self.resize_sched = None
         self.frame = Tkinter.Frame(
                         root,
                         borderwidth=0,
@@ -50,13 +53,13 @@ class DrawArea:
                         activewidth=0,
                         disabledwidth=0)
         self.canva.pack()
-        self.resize_start = 0
-        self.resize_stop = 0
-        self.resize_sched = None
         self.frame.bind('<Configure>', self.ev_resize)
 
     def clean(self):
         self.lines = []
+        self.resize_start = 0
+        self.resize_stop = 0
+        self.resize_sched = None
         self.compensation_applied = False
         self.ll_clean()
         self.bg('#999999')

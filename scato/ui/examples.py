@@ -3062,6 +3062,130 @@ scale 1.6
 set s 1
 call R'''),
 )),
+('Self-avoiding space-fillnig curve',
+r'''# Self-avoiding space-fillnig curve
+# Form book "Chaos and fractals: new frontiers of science"
+# By Heinz-Otto Peitgen, Hartmut Jrgens, Dietmar Saupe
+# Page 349
+
+# constants
+set mixfactor .4
+set peakfactor .95
+
+# derivatived constants
+set npeakfactor peakfactor
+neg npeakfactor
+
+# decided constants
+set  1/3  .3333333333333333
+set -1/3 -.3333333333333333
+set  2/3  .6666666666666666
+set -2/3 -.6666666666666666
+
+# draw sample
+procedure s
+local begin
+  draw .5  peakfactor
+  draw .5 npeakfactor
+end
+
+# recursion
+procedure r
+if l le 0 then call s else save begin
+  decr l
+  local begin
+    mixcolor 1 0 0 mixfactor
+    jump 0 1/3
+    right 90
+    affinescale 1/3 2/3
+    call r
+  end
+  local begin
+    mixcolor 1 1 0 mixfactor
+    jump 1/3 1/3
+    affinescale -1/3 2/3
+    call r
+  end
+  local begin
+    mixcolor 0 1 0 mixfactor
+    jump 1/3 2/3
+    right 90
+    scale 1/3
+    call r
+  end
+  local begin
+    mixcolor 0 1 1 mixfactor
+    jump 1 2/3
+    affinescale -2/3 1/3
+    call r
+  end
+  local begin
+    mixcolor 0 0 1 mixfactor
+    jump 1 2/3
+    left 90
+    affinescale -2/3 1/3
+    call r
+  end
+end
+
+# set up
+bgcolor 0 0 0
+color 1 1 1
+width .05
+
+# steps (small)
+local begin
+  set l 0
+  jump .04 .02
+  scale .2
+  iterate 4 begin
+    call r
+    incr l
+    jump 1.2 0
+  end
+end
+
+# deep (big)
+jump .125 .235
+scale .75
+set l 5
+call r'''),
+('Ulva',
+r'''procedure F
+  if level gt 0 then save begin
+    decr level
+    transform begin
+      affinescale .85 .5
+      call F
+    end
+    transform begin
+      scale .5
+      jump 0 1.6
+      transform begin
+        jump -1 0
+        call F
+      end
+      transform begin
+        jump 1 0
+        call F
+      end
+    end
+  end
+  else begin
+    scale .6
+    jump -1 0
+    draw 2 0
+  end
+
+color   0 .8 0
+bgcolor 0 0 0
+width   .6
+
+jump .5 .1
+scale .48
+
+set level 8
+call F'''),
 ('The birthday of my daughter',
 r'''# the birthday of my daughter
 

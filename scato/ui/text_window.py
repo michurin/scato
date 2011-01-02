@@ -21,7 +21,7 @@ Site:
 ############################################
 
 
-license_text = '''Copyright (c) 2009-2010, Michurin Alexey
+license_text = '''Copyright (c) 2009-2011, Michurin Alexey
 All rights reserved.
 
 Redistribution and use in source and binary forms,

@@ -59,16 +59,16 @@ draw   0   -0.5  # go to (0.2, 0.1)'''),
 r'''# You can use variables instead numbers.
 # To set up variable, use set statement:
 
-set a .333
+set a .33
 
 # Now you can use variable a
 
 color   a 1 a   # set color to light green
 bgcolor 0 0 0   # set black background
 
-jump a a # jump to .1 .1
-draw a 0 # draw to .2 .1
-draw 0 a # draw to .2 .2'''),
+jump a a # jump to .33 .33
+draw a 0 # draw to .66 .33
+draw 0 a # draw to .66 .66'''),
 ('Operations',
 r'''# You can perform some operation
 # incr var    # var := var + 1

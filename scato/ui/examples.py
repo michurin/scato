@@ -1099,12 +1099,12 @@ procedure A  # A -> B-A-B
   if level lt limit then
     save
     begin
-     incr level
-     call B
-     left 60
-     call A
-     left 60
-     call B
+      incr level
+      call B
+      left 60
+      call A
+      left 60
+      call B
     end
   else
   begin
